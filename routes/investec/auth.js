@@ -6,10 +6,10 @@ function splitPartitionFromToken(partitionedToken) {
     return { token: "SANDBOX", username: "SANDBOX", partition: undefined }
   }
 
-  const partitionedCredentials = new Buffer(partitionedToken, 'base64').toString()
+  const partitionedCredentials = Buffer.from(partitionedToken, 'base64').toString()
   const [partitionedUsername, password] = partitionedCredentials.split(":")
   const [username, partition] = partitionedUsername.split("/")
-  const token = (new Buffer.from(`${username}:${password}`)).toString('base64')
+  const token = Buffer.from(`${username}:${password}`).toString('base64')
   return { token, username, partition }
 }
 

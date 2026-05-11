@@ -1,6 +1,9 @@
 const axios = require('axios')
 const InvestecSandbox = require('./investec_sandbox')
-const logError = (error) => console.log(error.toJSON())
+const logError = (error) => {
+  console.log(error.toJSON ? error.toJSON() : error)
+  return error.response
+}
 
 // Simple adapter to fetch bearer tokens and proxy requests to Investec's API
 
