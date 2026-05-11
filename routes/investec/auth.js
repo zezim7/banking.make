@@ -2,6 +2,9 @@ function splitPartitionFromToken(partitionedToken) {
   // pulls out an optional partition (subfolder) from API credentials
   // which is used when filtering Investec API responses to show only
   // certain cards
+  if (partitionedToken == "SANDBOX") {
+    return { token: "SANDBOX", username: "SANDBOX", partition: undefined }
+  }
 
   const partitionedCredentials = new Buffer(partitionedToken, 'base64').toString()
   const [partitionedUsername, password] = partitionedCredentials.split(":")
@@ -16,7 +19,6 @@ function getAuth(_req, _res, next) {
   if (authType == "Basic") {
     let { token, username, partition } = splitPartitionFromToken(partitionedToken)
     _req.currentUser = { username, partition, token }
-    console.log(_req.currentUser)
   }
 
   if (authType == "RootCard") {

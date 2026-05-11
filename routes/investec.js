@@ -31,7 +31,7 @@ router.get('/za/v1/cards', async (_req, _res) => {
 router.get('/*', async (_req, _res) => {
   const investec = new Investec(_req.currentUser.token)
   const response = await investec.getWithAuth(_req.url)
-  _res.json(response.data)
+  _res.status(response.status || 200).json(response.data)
 })
 
 // proxies any POST request to the investec adapter
@@ -39,7 +39,7 @@ router.get('/*', async (_req, _res) => {
 router.post('/*', async (_req, _res) => {
   const investec = new Investec(_req.currentUser.token)
   const response = await investec.postWithAuth(_req.url, _req.body)
-  _res.json(response.data)
+  _res.status(response.status || 200).json(response.data)
 })
 
 module.exports = router
